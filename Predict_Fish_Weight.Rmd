@@ -91,9 +91,39 @@ subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2
 Perch2=lm(Weight~Height+Width,data=Perch)
 summary.lm(Perch2)
 ```
-The best two regressor model predict weight using height with
+The best two regressor model predict weight using height and wieth. 
+
+
 
 ## Pike
+```{r}
+perchModel=lm(Weight~ .,data=Perch)
+summary.lm(perchModel)
+```
+
+
+```{r}
+library(leaps)
+regsubsets.out <-
+    regsubsets(Weight ~ .,
+               data = Pike,
+               nbest = 1,       # 1 best model for each number of predictors
+               nvmax = NULL,    # NULL for no limit on number of variables
+               force.in = NULL, force.out = NULL,
+               method = "exhaustive")
+
+summary.out <- summary(regsubsets.out)
+as.data.frame(summary.out$outmat)
+library(car)
+subsets(regsubsets.out,statistic="adjr2",legend="bottomright",main="Adjusted R^2")
+```
+
+## bestmodel
+```{r}
+pikeModel=lm(Weight~ .,data=Pike)
+summary.lm(pikeModel)
+```
+
 
 ## Roach
 
